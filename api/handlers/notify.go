@@ -12,6 +12,7 @@ import (
 
 // Person is model
 type Person struct {
+	HeaderEmail   string `json:"header_email,omitempty"`
 	Email         string `json:"email,omitempty"`
 	Password      string `json:"password,omitempty"`
 	To            string `json:"to,omitempty"`
@@ -26,7 +27,7 @@ func notifyByEmail(p *Person) {
 	m.SetHeader("From", p.Email)
 	m.SetHeader("To", p.To)
 
-	m.SetHeader("Subject", "Gophers GO!")
+	m.SetHeader("Subject", p.HeaderEmail)
 
 	t := template.Must(template.ParseFiles(fmt.Sprintf("templates/%s", p.EmailTemplate)))
 	m.AddAlternativeWriter("text/html", func(w io.Writer) error {
