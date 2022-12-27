@@ -16,6 +16,6 @@ func SendEmail(w http.ResponseWriter, r *http.Request) {
 	}
 	p := &Person{}
 	json.NewDecoder(r.Body).Decode(p)
-	notifyByEmail("notify.html", p)
+	notifyByEmail(p)
 	json.NewEncoder(w).Encode(p)
 }

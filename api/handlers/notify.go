@@ -12,13 +12,14 @@ import (
 
 // Person is model
 type Person struct {
-	Email    string `json:"email,omitempty"`
-	Password string `json:"password,omitempty"`
-	To       string `json:"to,omitempty"`
-	Message  string `json:"message,omitempty"`
+	Email         string `json:"email,omitempty"`
+	Password      string `json:"password,omitempty"`
+	To            string `json:"to,omitempty"`
+	Message       string `json:"message,omitempty"`
+	EmailTemplate string `json:"email_template,omitempty"`
 }
 
-func notifyByEmail(templateName string, p *Person) {
+func notifyByEmail(p *Person) {
 
 	m := gomail.NewMessage()
 
@@ -27,7 +28,7 @@ func notifyByEmail(templateName string, p *Person) {
 
 	m.SetHeader("Subject", "Gophers GO!")
 
-	t := template.Must(template.ParseFiles(fmt.Sprintf("templates/%s", templateName)))
+	t := template.Must(template.ParseFiles(fmt.Sprintf("templates/%s", p.EmailTemplate)))
 	m.AddAlternativeWriter("text/html", func(w io.Writer) error {
 		return t.Execute(w, p)
 	})
